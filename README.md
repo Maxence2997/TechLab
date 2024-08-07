@@ -8,6 +8,10 @@ This repository is dedicated to documenting and sharing various Proof of Concept
 - [Technologies Covered](#technologies-covered)
 - [Projects](#projects)
 
+## Introduction
+
+In this repository, you will find a collection of PoCs and experimental projects aimed at exploring technologies and methodologies.
+
 ## Technologies Covered
 
 - **Programming Languages**:
