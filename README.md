@@ -5,6 +5,7 @@ This repository is dedicated to documenting and sharing various Proof of Concept
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Technologies Covered](#technologies-covered)
 - [Projects](#projects)
 
 ## Technologies Covered
