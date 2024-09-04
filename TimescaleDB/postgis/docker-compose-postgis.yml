@@ -1,0 +1,24 @@
+services:
+  timescaledb:
+    build:
+      context: .
+      dockerfile: timescaledb.dockerfile
+    container_name: timescaledb-postgis
+    environment:
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata_v16_timescale_postgis:/var/lib/postgresql/data
+    networks:
+      - timescaledb-postgis
+    restart: always
+
+volumes:
+  pgdata_v16_timescale_postgis:
+
+
+networks:
+  timescaledb-postgis:
+    driver: bridge

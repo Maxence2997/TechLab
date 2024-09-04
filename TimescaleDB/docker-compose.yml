@@ -1,21 +1,34 @@
 services:
   timescaledb:
-    build:
-      context: .
-      dockerfile: timescaledb.dockerfile
+    image: timescale/timescaledb:latest-pg16
     container_name: timescaledb
     environment:
       - POSTGRES_PASSWORD=123456
     ports:
       - "5433:5432"
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init_with_data.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata_v16_timescaledb:/var/lib/postgresql/data
+    networks:
+      - timescaledb
+    restart: always
+
+  postgreSQL16:
+    image: postgres:16.4
+    container_name: postgreSQL
+    environment:
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init_with_data.sql:/docker-entrypoint-initdb.d/init.sql
       - pgdata_v16:/var/lib/postgresql/data
     networks:
       - timescaledb
     restart: always
 
 volumes:
+  pgdata_v16_timescaledb:
   pgdata_v16:
 
 networks:
