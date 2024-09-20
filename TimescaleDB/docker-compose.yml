@@ -7,7 +7,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - ./init_with_data.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./resource/init_with_data_timescaledb.sql:/docker-entrypoint-initdb.d/init.sql
       - pgdata_v16_timescaledb:/var/lib/postgresql/data
     networks:
       - timescaledb
@@ -21,10 +21,33 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./init_with_data.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./resource/init_with_data.sql:/docker-entrypoint-initdb.d/init.sql
       - pgdata_v16:/var/lib/postgresql/data
     networks:
       - timescaledb
+    restart: always
+  
+  node-app:
+    build: ./node-postgres
+    container_name: node-app
+    ports:
+      - "3000:3000"
+    environment:
+      - PG_HOST=postgreSQL16
+      - PG_PORT=5432
+      - PG_DATABASE=testing
+      - PG_USER=postgres
+      - PG_PASSWORD=123456
+      - TSDB_HOST=timescaledb
+      - TSDB_PORT=5433
+      - TSDB_DATABASE=testing
+      - TSDB_USER=postgres
+      - TSDB_PASSWORD=123456
+    networks:
+      - timescaledb
+    depends_on:
+      - timescaledb
+      - postgreSQL16
     restart: always
 
 volumes:
